@@ -1,0 +1,121 @@
+package grafAnimatin;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class JdrawLine {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					JdrawLine window = new JdrawLine();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public JdrawLine() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 816, 840);
+		frame.setLocationRelativeTo(null);
+		frame.add(new sufe());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+}
+
+class sufe extends JPanel implements ActionListener{
+	
+	public int r=0;
+	public int gg =0;
+	public int b = 0;
+	public int delay =100;
+	public Timer time;
+	
+	public sufe() {
+		intime();
+	}
+	
+	
+		
+	private void intime() {
+		// TODO Auto-generated method stub
+		time = new Timer(delay, this);
+		time.start();
+	}
+
+
+
+	public void paint(Graphics g) {
+		
+		Graphics2D gr = (Graphics2D) g.create();
+		
+			for(int j =0,y=0;j<getHeight()/8;y+=100,j++) {
+				for(int i =0,x=0;i<getWidth()/8;x+=100,i++) {	
+					if(j%2!=0 && i%2==0 || j%2==0 && i%2!=0) {
+					rrenk();
+					gr.setPaint(new Color(r,gg,b));
+					gr.fillRect(x, y, getWidth()/8, getHeight()/8);
+				
+					}else {
+					gr.drawRect(x, y, getWidth()/8, getHeight()/8);
+					}
+				
+				}
+			}
+			
+		gr.dispose();
+	}
+	
+	@Override
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		paint(g);
+		
+		
+	}
+
+	public void rrenk() {
+		r = (0+(int)(Math.random()*255));
+		gg = (0+(int)(Math.random()*255));
+		b= (0+(int)(Math.random()*255));
+	}
+		
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		rrenk();
+		repaint();
+		
+	}
+	
+}
